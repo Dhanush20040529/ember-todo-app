@@ -1,0 +1,26 @@
+<div class="task-page">
+    <div class="task-page-backDrop">
+        <div class="task-page-contianer">
+            <div class="task-page-header">
+                <h2 class="task-page-time">{{@task.time}}</h2>
+                {{#if @task.checked}}
+                    <h1 class="task-page-status">Done!</h1>
+                
+                {{else}}
+                    <h1>Not completed</h1>
+                {{/if}}
+            </div>
+            
+            <div class="task-page-main">
+                <h2 class="task-page-name"><span class="bold">Task</span> : {{@task.name}}</h2>
+                <h2 class="task-page-discription"><span class="bold">Task discription</span> : <br>{{@task.discription}}</h2>
+                <button class="task-page-deleteBTN" type="button" {{on "click" (fn @deleteTask @task.id)}}>Delete task</button>
+            </div>
+            
+            <button class="task-page-closeBTN" type="button" {{on "click" @closeTask}}><i class="fa-solid fa-circle-xmark"></i></button>
+
+        </div>
+    </div>
+</div>
+
+{{yield}}

@@ -1,0 +1,85 @@
+<div class="createTask-page">
+    <div class="createTask-container">
+        <div class="createTask-herder">
+            <LinkTo @route ="index"><button class="createTask-back-btn" type="button"><i class="fa-solid fa-arrow-left"></i></button></LinkTo>
+            
+            <h2>Create Task</h2>
+            <div></div>
+        </div>
+        <div class="createTask-main">
+            <div class="createTask-calender-container">
+                <PowerCalendar
+                    @selected={{this.selectedDate}}
+                    @onSelect={{this.onSelect}}
+                    @center = {{this.center}}
+                    @onCenterChange={{perform this.updateMonth}} as |calendar|>
+                <div class="cal-nav">
+                    <button type="button" {{on "click" this.prevYear}}><i class="fa-solid fa-angles-left"></i></button>
+                    <button type="button" {{on "click" this.prevMonth}}><i class="fa-solid fa-angle-left"></i></button>
+
+                    <h2 class="cal-title">
+                    {{this.month}}
+
+                    
+
+                    </h2>
+
+                    <button type="button" {{on "click" this.nextMonth}}><i class="fa-solid fa-angle-right"></i></button>
+                    <button type="button" {{on "click" this.nextYear}}><i class="fa-solid fa-angles-right"></i></button>
+                </div>
+
+                <calendar.Days/>
+                </PowerCalendar>
+            </div>
+            <form {{on "submit" this.submit}} class="createTask-form">
+                
+                <div class="createTask-nameField">
+                    
+                    <input 
+                        type="text" 
+                        id="name" 
+                        placeholder="name" 
+                        value={{this.name}}
+                        required
+                        {{on "input" this.updateName}}
+                    >
+                </div>
+                <div class="createTask-timeField">
+                    <input type="text"
+                            id="time"
+                            placeholder="time like 10:30AM"
+                            value={{this.time}}
+                            required
+                            pattern="(0?[1-9]|1[0-2])(:[0-5][0-9])?\s?(AM|PM)"
+                            title="enter time like 10:30AM"
+                            {{on 'input' this.updateTime}}>
+                </div>
+                <div class="createTask-discriptionField">
+                    <textarea 
+                        name="discription" 
+                        id="discription" 
+                        required
+                        placeholder="task discription"
+                        value = {{this.discription}}
+                        {{on "input" this.updateDiscription}}
+                    >
+                    </textarea>
+                    
+                </div>
+                <div class="createTask-submit-btns">
+                    <button class="createTask-btn" type="submit">Create Task</button>  
+                    <button class="createTask-btn" type="submit" {{on "click" this.submitAndStay}}>Create and add more</button>  
+
+                </div>      
+                
+                
+            </form>
+        
+       </div>
+        
+    </div>
+    
+
+</div>
+
+{{yield}}

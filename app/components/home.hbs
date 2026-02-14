@@ -1,0 +1,62 @@
+<div class="home-page">
+    <div class="home-container">
+        <div class="home-page-header">
+            <h2 class="home-current-date">{{this.dateMonth}}</h2>
+    
+            <div class="home-second-row">
+                <div class="day">
+                    <h2>{{this.day}}</h2>
+                    <p>{{if this.tasks this.tasks.length "0"}} tasks</p>
+                </div>
+                <div class="add-new">
+                    <LinkTo @route = 'create-task'><button class="add-new-btn" type="button">
+                    Add New 
+                    </button></LinkTo>
+                </div>
+            </div>
+        </div>
+        
+        <div class="home-main-container">
+            <div class="home-date-row">
+            
+                {{#each this.dates key="@index" as |date index|}}
+                    <button
+                        class={{if (eq this.activeButton index) "active" "home-dates"}} type="button" {{on "click" (fn this.dateChange index)}}
+                    >
+                        {{date}} 
+                    </button>
+                {{/each}}
+                <button class="home-moreDate-btn" type="button" {{on "click" this.openCalendar}}><i class="fa-regular fa-calendar"></i></button>
+            </div>
+            <div class="home-tasks-container">
+                <h3>Tasks</h3>
+                <div class="home-tasks">
+                    {{#if this.tasks}}
+                        {{#each this.allTasks as |task index|}}
+                            <div class="home-task" >
+                                <p class="home-task-sno" {{on "click" (fn this.openTask index)}}>{{add-one index }}</p>
+                                <p class="home-task-time" {{on "click" (fn this.openTask index)}}>{{task.time}}</p>
+                                <div class="home-task-main" {{on "click" (fn this.openTask index)}}>
+                                    <h2 class={{if (eq task.checked true) "line-through" "home-task-detail"}}>{{task.name}}</h2>
+                                    <p {{!-- class={{if (eq task.checked true) "line-through" "home-task-detail"}} --}}>{{shorten task.discription}}</p>
+                                </div>
+                            
+                                <input type="checkbox" class="home-task-checkbox" id="checkbox" checked={{task.checked}} {{on "change" (fn this.changeChecked task.id)}}>
+                                {{!-- <p {{on "click" (fn this.deleteTask task.id)}} class="home-task-deleteBTN"><i class="fa-solid fa-circle-minus"></i></p> --}}
+                            </div>
+                        {{/each}}
+                    {{else}}
+                        <p class="home-task-empty">No task added in this date</p>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{#if this.isOpen}}
+        <Calendar @onClose = {{this.closeCalendar}} @dateArray = {{this.dateArray}}/>
+    {{/if}}
+    {{#if this.isTaskOpen}}
+        <TodoItem @task = {{this.toOpenTask}} @closeTask = {{this.closeTask}} @deleteTask = {{this.deleteTask}}/>
+    {{/if}}
+
+</div>
